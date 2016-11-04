@@ -1,0 +1,1 @@
+// Her kan vi teste funktionen makeCode.fsx
