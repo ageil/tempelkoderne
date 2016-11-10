@@ -1,0 +1,2 @@
+// guess : player -> board -> code
+// som tager en spillertype, et bræt bestående af et spils tidligere gæt og svar og returnerer et nyt gæt enten ved input fra brugeren eller ved at programmet beregner et gæt.
