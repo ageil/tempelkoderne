@@ -8,6 +8,7 @@ type answer = int * int
 type board = (code * answer) list
 type player = Human | Computer
 
+let testList = [Red; Green; Black; White]
 
 (*
 Modtag input skal bruge:
@@ -17,27 +18,55 @@ En funktion, som via pattern matching læser array-elementerne og indsætter den
 *)
 
 
+// Virker, men er besværlig på flere områder. F.eks. ift. rigtigt antal farver og rigtig stavning.
+// let enterOneString =
+//     printf "Enter four colours: "
+//     let str = (System.Console.ReadLine ()).ToLower()    // Lader brugeren indtaste 
+//     let splitStr = str.Split(([|' '|]), System.StringSplitOptions.None)
+//     if splitStr.Length = 4 then 
+//         splitStr
+//     else
+//         printfn "You must enter four colours." 
+//         [|"You must "|]
+// printfn "%A" (enterOneString)
 
-let testCode =
-    let colours = []
-    match (System.Console.ReadLine ()) with
-    | "red" -> colours @ [Red]
-    | "green" -> colours @ [Green]
-    | "yellow" -> colours @ [Yellow]
-    | "purple" -> colours @ [Purple]
-    | "white" -> colours @ [White]
-    | "black" -> colours @ [Black]
-    | _ -> failwith "Invalid input."
+// toColour Matcher første character i en string med en farve-type / codeColour.
+let rec toColour (str : string) =
+    match (str.[0]) with
+    | 'r' -> Red
+    | 'g' -> Green
+    | 'y' -> Yellow
+    | 'p' -> Purple
+    | 'w' -> White
+    | 'b' -> Black
+    | _ -> printf "Invalid input. Try again: "; toColour((System.Console.ReadLine ()).ToLower())
 
-printfn "%A" (testCode)
+// testCode virker, men er ikke særlig elegant.
+let enterCode =
+    printfn "Pick your colours!"
+    printfn "(red / green / yellow / purple / white / black)"
+    printf "1st colour: "
+    let col1 =  toColour((System.Console.ReadLine ()).ToLower())    // Til type (Til lower case (Kalder brugerinput))
+    printf "2nd colour: "
+    let col2 =  toColour((System.Console.ReadLine ()).ToLower())
+    printf "3rd colour: "
+    let col3 =  toColour((System.Console.ReadLine ()).ToLower())
+    printf "4th colour: "
+    let col4 =  toColour((System.Console.ReadLine ()).ToLower())
+    let colours = [col1] @ [col2] @ [col3] @ [col4]
+    printfn "Your pick: %A" colours
+    colours
+
+printfn "%A" enterCode
 
 
 // makeCode virker. Den returnerer 1, hvis input er Human.
 let makeCode (user : player) =
     if user = Human then
-        [(System.Console.ReadLine ());(System.Console.ReadLine ());(System.Console.ReadLine ());(System.Console.ReadLine ())]
+        ["human"]
+        // ["(System.Console.ReadLine ());(System.Console.ReadLine ());(System.Console.ReadLine ());(System.Console.ReadLine ())"]
     else
         ["fejl"]
 
-printfn "%A" (makeCode (Human))
+// printfn "%A" (makeCode (Human))
 // printfn "%A" (makeCode (Computer))
