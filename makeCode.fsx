@@ -57,7 +57,7 @@ let enterCode =
     printfn "Your pick: %A" colours
     colours
 
-printfn "%A" enterCode
+enterCode
 
 
 // makeCode virker. Den returnerer 1, hvis input er Human.
