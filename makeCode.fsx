@@ -1,4 +1,6 @@
 // makeCode : player -> code
+// som tager en spillertype og returnerer en opgave enten ved at få input fra brugeren eller ved at beregne en opgave.
+
 
 type codeColor = Red | Green | Yellow | Purple | White | Black
 type code = codeColor list
