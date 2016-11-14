@@ -8,7 +8,25 @@ type answer = int * int
 type board = (code * answer) list
 type player = Human | Computer
 
-let testList = [Red; Green; Black; White]
+let whoCodeMaker =
+    printf "Who code maker? (Computer / Human)"
+    if ((System.Console.ReadLine ()).ToLower()).[0] = 'c' then
+        printfn "Code Maker: Computer"
+        Computer
+    else
+        printfn "Code Maker: Human"
+        Human
+
+let whoCodeBreaker =
+    printf "Who code breaker? (Computer / Human)"
+    if ((System.Console.ReadLine ()).ToLower()).[0] = 'c' then
+        printfn "Code Breaker: Computer"
+        Computer
+    else
+        printfn "Code Breaker: Human"
+        Human
+
+
 
 (*
 Modtag input skal bruge:
@@ -60,11 +78,11 @@ let enterCode =
 enterCode
 
 
+
 // makeCode virker. Den returnerer 1, hvis input er Human.
 let makeCode (user : player) =
     if user = Human then
         ["human"]
-        // ["(System.Console.ReadLine ());(System.Console.ReadLine ());(System.Console.ReadLine ());(System.Console.ReadLine ())"]
     else
         ["fejl"]
 
