@@ -9,7 +9,7 @@ type board = (code * answer) list
 type player = Human | Computer
 
 let whoCodeMaker =
-    printfn "Who code maker? (Computer / Human)"
+    printf "Who code maker? (Computer / Human)"
     if ((System.Console.ReadLine ()).ToLower()).[0] = 'c' then
         printfn "Code Maker: Computer"
         Computer
@@ -18,7 +18,7 @@ let whoCodeMaker =
         Human
 
 let whoCodeBreaker =
-    printfn "Who code breaker? (Computer / Human)"
+    printf "Who code breaker? (Computer / Human)"
     if ((System.Console.ReadLine ()).ToLower()).[0] = 'c' then
         printfn "Code Breaker: Computer"
         Computer
@@ -75,6 +75,9 @@ let enterCode =
     printfn "Your pick: %A" colours
     colours
 
+enterCode
+
+
 
 // makeCode virker. Den returnerer 1, hvis input er Human.
 let makeCode (user : player) =
@@ -87,16 +90,24 @@ let makeCode (user : player) =
 // printfn "%A" (makeCode (Computer))
 
 
-// bygger på enterCode, der bygger på toColour
+
 let makeCode (user : player) =
-    if user = Computer then
-        let colors = [|Red; Green; Yellow; Purple; White; Black|]
-        let rand = System.Random()
-        let code = [colors.[rand.Next(0,5)];
-                    colors.[rand.Next(0,5)];
-                    colors.[rand.Next(0,5)];
-                    colors.[rand.Next(0,5)]]
-        code
-    else
-        let code = enterCode
-        code
+    try
+        if user = Computer then
+            let colors = [|Red; Green; Yellow; Purple; White; Black|]
+            let rand = System.Random()
+            let code = [|colors.[rand.Next(0,5)];
+                        colors.[rand.Next(0,5)];
+                        colors.[rand.Next(0,5)];
+                        colors.[rand.Next(0,5)]|]
+            code
+        elif user = Human then
+            printfn "Pick four colors"
+            let input = System.Console.ReadLine()
+            let code = [||]
+            code
+    with
+        _ -> failwith (makeCode Computer)
+
+
+colors.[System.Random().Next(0, 5)]
