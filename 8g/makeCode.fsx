@@ -1,5 +1,5 @@
 // makeCode : player -> code
-// som tager en spillertype og returnerer en opgave enten ved at få input fra brugeren eller ved at beregne en opgave.
+// som tager en spillertype og returnerer en opgave enten ved at få input fra brugeren eller ved at beregne en opgave.
 
 
 type codeColor = Red | Green | Yellow | Purple | White | Black
@@ -9,7 +9,7 @@ type board = (code * answer) list
 type player = Human | Computer
 
 let whoCodeMaker =
-    printf "Who code maker? (Computer / Human)"
+    printfn "Who code maker? (Computer / Human)"
     if ((System.Console.ReadLine ()).ToLower()).[0] = 'c' then
         printfn "Code Maker: Computer"
         Computer
@@ -18,7 +18,7 @@ let whoCodeMaker =
         Human
 
 let whoCodeBreaker =
-    printf "Who code breaker? (Computer / Human)"
+    printfn "Who code breaker? (Computer / Human)"
     if ((System.Console.ReadLine ()).ToLower()).[0] = 'c' then
         printfn "Code Breaker: Computer"
         Computer
@@ -75,9 +75,6 @@ let enterCode =
     printfn "Your pick: %A" colours
     colours
 
-enterCode
-
-
 
 // makeCode virker. Den returnerer 1, hvis input er Human.
 let makeCode (user : player) =
@@ -88,3 +85,18 @@ let makeCode (user : player) =
 
 // printfn "%A" (makeCode (Human))
 // printfn "%A" (makeCode (Computer))
+
+
+// bygger på enterCode, der bygger på toColour
+let makeCode (user : player) =
+    if user = Computer then
+        let colors = [|Red; Green; Yellow; Purple; White; Black|]
+        let rand = System.Random()
+        let code = [colors.[rand.Next(0,5)];
+                    colors.[rand.Next(0,5)];
+                    colors.[rand.Next(0,5)];
+                    colors.[rand.Next(0,5)]]
+        code
+    else
+        let code = enterCode
+        code
