@@ -7,8 +7,7 @@ type answer = int * int // sort * hvid
 type board = (code * answer) list
 type player = Human | Computer
 
-let sCode = [White; Red; Black; Black]
-let gCode = [Black; White; Red; Black]
+// toHistogram omdanner en code til et histogram, en tuple der indeholder antallet af forekomster af hver farve.
 let toHistogram (c : code) =
     let mutable r = 0
     let mutable g = 0
@@ -26,8 +25,8 @@ let toHistogram (c : code) =
         | Black -> b <- b + 1
     (r,g,y,p,w,b)
 
-                        // Secret tuple         guess tuple
-let compareHistograms (r1,g1,y1,p1,w1,b1) (r2,g2,y2,p2,w2,b2) =
+// compareHistograms returnerer summen af intersections ml. to tupler à længden 6.
+let compareHistograms (r1,g1,y1,p1,w1,b1) (r2,g2,y2,p2,w2,b2) = // Secret tuple         guess tuple
     let r =
         if r2 <= r1 then r2
         elif r2 > r1 then r1
@@ -68,5 +67,10 @@ let validate (secretCode : code) (guessCode : code) =
         whites <- whites - blacks
     let result : answer = (blacks,whites)
     result
+
+// En secret code til test.
+let sCode = [White; Red; Black; Black]
+// En guess code til test.
+let gCode = [Black; White; Red; Black]
 
 printfn "%A" (validate sCode gCode)
