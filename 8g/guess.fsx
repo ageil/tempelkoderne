@@ -7,25 +7,63 @@ type answer = int * int // sort * hvid
 type board = (code * answer) list
 type player = Human | Computer
 
+(*Diverse funktioner / dependencies er importeret hertil. guess står nederst*)
 
+
+// Dependency for guess.
+let rec toColour (str : string) =
+    match (str.[0]) with
+    | 'r' -> Red
+    | 'g' -> Green
+    | 'y' -> Yellow
+    | 'p' -> Purple
+    | 'w' -> White
+    | 'b' -> Black
+    | _ -> printf "Invalid input. Try again: "; toColour((System.Console.ReadLine ()).ToLower())
+
+// Dependency for guess.
+let enterCode () =
+    printfn "Pick your colours!"
+    printfn "(red / green / yellow / purple / white / black)"
+    printf "1st colour: "
+    let col1 =  toColour((System.Console.ReadLine ()).ToLower())    // Til type (Til lower case (Kalder brugerinput))
+    printf "2nd colour: "
+    let col2 =  toColour((System.Console.ReadLine ()).ToLower())
+    printf "3rd colour: "
+    let col3 =  toColour((System.Console.ReadLine ()).ToLower())
+    printf "4th colour: "
+    let col4 =  toColour((System.Console.ReadLine ()).ToLower())
+    let colours = [col1] @ [col2] @ [col3] @ [col4]
+    printfn "Your pick: %A" colours
+    colours
+
+// Dependency for guess.
+let generateCode () =
+    let colors = [Red; Green; Yellow; Purple; White; Black]
+    let rand = System.Random()
+    let code = [colors.[rand.Next(0,5)];
+                colors.[rand.Next(0,5)];
+                colors.[rand.Next(0,5)];
+                colors.[rand.Next(0,5)]]
+    code
+
+// Dependency for guess.
+let endGame () =
+    printfn "GAME OVER"
+    [Red;Red;Red;Red] // placeholder
+
+
+
+
+// guess : Tager en playertype og board for det nuværende spil og kalder en passende funktion, der genererer en kode.
 let guess (playerType : player) (currentBoard : board) =
-    ()
+    if currentBoard.Length < 20 && playerType = Human then
+        enterCode ()
+    elif currentBoard.Length < 20 && playerType = Computer then
+        generateCode ()
+    else
+        endGame ()
 
-
-
-// Omdanner et board til en string, som kan printes.
-let printBoard (aBoard : board) =
-    let mutable stringBoard = (sprintf "%-10s%-10s%-10s%-10s %-5s\n----------------------------------------------\n" "Col1" "Col2" "Col3" "Col4" "B, W")
-    for i = 0 to aBoard.Length - 1 do   // Løber igennem hvert element, altså tuple, (code * answer) i et board.
-        for j = 0 to 3 do               // Løber gennem det første element, en code, i hver tuple i board og skriver hvert element i code til stringBoard.
-            stringBoard <- stringBoard + (sprintf "%-10s" (sprintf "%A" (fst (aBoard.[i])).[j]))
-        stringBoard <- stringBoard + (sprintf "%-6s" (sprintf "%A" (snd (aBoard.[i])))) +  "\n" // Løber gennem det andet element, et answer, i hver tuple i board og skriver det til stringBoard
-    stringBoard
-
-// Et board til test af printBoard.
-let testBoard : board = [([Red;Red;Green;Green],(1,1));
-                        ([Yellow;Yellow;Purple;Purple],(1,1));
-                        ([White;Black;Purple;Purple],(0,0));]
-
-// Tester printBoard med testBoard.
-printfn "%s" (printBoard testBoard)
+// Tester
+let testPlayer = Human
+// printfn "%A" (guess testPlayer testBoard)
