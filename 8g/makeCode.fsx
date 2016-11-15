@@ -88,15 +88,11 @@ let makeCode (user : player) =
 
 
 // bygger på enterCode, der bygger på toColour
-let makeCode (user : player) =
-    if user = Computer then
-        let colors = [|Red; Green; Yellow; Purple; White; Black|]
-        let rand = System.Random()
-        let code = [colors.[rand.Next(0,5)];
-                    colors.[rand.Next(0,5)];
-                    colors.[rand.Next(0,5)];
-                    colors.[rand.Next(0,5)]]
-        code
-    else
-        let code = enterCode
-        code
+let generateCode =
+    let colors = [Red; Green; Yellow; Purple; White; Black]
+    let rand = System.Random()
+    let code = [colors.[rand.Next(0,5)];
+                colors.[rand.Next(0,5)];
+                colors.[rand.Next(0,5)];
+                colors.[rand.Next(0,5)]]
+    code
