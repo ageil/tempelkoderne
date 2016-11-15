@@ -13,12 +13,13 @@ let testBoard : board = [([Red;Red;Green;Green],(1,1));
                         ([Yellow;Yellow;Purple;Purple],(1,1));
                         ([White;Black;Purple;Purple],(0,0));]
 
-
-
+// Omdanner et board til en string, som kan printes.
 let printBoard (aBoard : board) =
-    let mutable stringBoard = ""
-    for i = 0 to aBoard.Length - 1 do
-        stringBoard <- stringBoard + (sprintf "%90A%10A" (fst (aBoard.[i])) (snd (aBoard.[i]))) +  "\n"
+    let mutable stringBoard = (sprintf "%-10s%-10s%-10s%-10s %-5s\n----------------------------------------------\n" "Col1" "Col2" "Col3" "Col4" "B, W")
+    for i = 0 to aBoard.Length - 1 do   // Løber igennem hvert element, altså tuple, (code * answer) i et board.
+        for j = 0 to 3 do               // Løber gennem det første element, en code, i hver tuple i board og skriver hvert element i code til stringBoard.
+            stringBoard <- stringBoard + (sprintf "%-10s" (sprintf "%A" (fst (aBoard.[i])).[j]))
+        stringBoard <- stringBoard + (sprintf "%-6s" (sprintf "%A" (snd (aBoard.[i])))) +  "\n" // Løber gennem det andet element, et answer, i hver tuple i board og skriver det til stringBoard
     stringBoard
 
 printfn "%s" (printBoard testBoard)
