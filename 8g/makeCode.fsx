@@ -60,7 +60,7 @@ let rec toColour (str : string) =
     | _ -> printf "Invalid input. Try again: "; toColour((System.Console.ReadLine ()).ToLower())
 
 // testCode virker, men er ikke særlig elegant.
-let enterCode =
+let enterCode () =
     printfn "Pick your colours!"
     printfn "(red / green / yellow / purple / white / black)"
     printf "1st colour: "
@@ -75,20 +75,7 @@ let enterCode =
     printfn "Your pick: %A" colours
     colours
 
-
-// makeCode virker. Den returnerer 1, hvis input er Human.
-let makeCode (user : player) =
-    if user = Human then
-        ["human"]
-    else
-        ["fejl"]
-
-// printfn "%A" (makeCode (Human))
-// printfn "%A" (makeCode (Computer))
-
-
-// bygger på enterCode, der bygger på toColour
-let generateCode =
+let generateCode () =
     let colors = [Red; Green; Yellow; Purple; White; Black]
     let rand = System.Random()
     let code = [colors.[rand.Next(0,5)];
@@ -96,3 +83,17 @@ let generateCode =
                 colors.[rand.Next(0,5)];
                 colors.[rand.Next(0,5)]]
     code
+
+// makeCode virker. Den returnerer 1, hvis input er Human.
+let makeCode (user : player) =
+    if user = Human then
+        enterCode ()
+    else
+        generateCode ()
+
+// printfn "%A" (makeCode (Human))
+// printfn "%A" (makeCode (Computer))
+
+
+// bygger på enterCode, der bygger på toColour
+
