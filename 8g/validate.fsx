@@ -56,12 +56,16 @@ let compareHistograms (r1,g1,y1,p1,w1,b1) (r2,g2,y2,p2,w2,b2) = // Secret tuple 
 let validate (secretCode : code) (guessCode : code) =
     let mutable blacks = 0
     let mutable whites = 0
-    for i = 0 to 3 do                               // Optæller antallet af sorte stifter for hver rigtig farve i rigtig position.
+    for i = 0 to 3 do
+        // Optæller antallet af sorte stifter for hver rigtig farve i rigtig position.
         if secretCode.[i] = guessCode.[i] then
             blacks <- blacks + 1
-    let secretHistogram = (toHistogram secretCode)                          // Bestemmer et histogram over farverne i secretCode
-    let guessHistogram = (toHistogram guessCode)                            // Bestemmer et histogram over farverne i guessCode
-    let sumHistograms = (compareHistograms secretHistogram guessHistogram)  // Beregner antallet af "intersections" ml. de to histogrammer. Så hvis kode = 2 rød og gæt = 1x rød er antallet = 1. 
+    let secretHistogram = (toHistogram secretCode)
+    // Bestemmer et histogram over farverne i secretCode
+    let guessHistogram = (toHistogram guessCode)
+    // Bestemmer et histogram over farverne i guessCode
+    let sumHistograms = (compareHistograms secretHistogram guessHistogram)
+    // Beregner antallet af "intersections" ml. de to histogrammer. Så hvis kode = 2 rød og gæt = 1x rød er antallet = 1. 
     whites <- whites + sumHistograms
     if whites > 0 then
         whites <- whites - blacks
@@ -74,3 +78,42 @@ let sCode = [White; Red; Black; Black]
 let gCode = [Black; White; Red; Black]
 
 printfn "%A" (validate sCode gCode)
+
+
+
+
+
+
+
+
+// meget mere simpel validate, uden fucking ulæselig jon-sporring-histogramkode
+// bonus: rekursiv blacks-optælling (indeksering er langsomt i lister)
+
+let qvalidate (gCode : code) (sCode : code) =
+    // count blacks
+    let blacks (gCode : code) (sCode : code) =
+        let rec hits l1 l2 =
+            match (l1, l2) with
+            | ([],_) -> 0
+            | (_,[]) -> 0
+            | (gh::gt, sh::st) -> if gh = sh then 1 + (hits gt st)
+                                  else 0 + (hits gt st)
+        let blacks = hits gCode sCode
+        blacks
+
+    // count whites
+    let whites (gCode : code) (sCode : code) =
+        let rec misses l1 l2 =
+            match (l1, l2) with
+            | ([],_) -> []
+            | (_,[]) -> []
+            | (gh::gt,sh::st) -> if gh = sh then misses gt st
+                                 else gh::(misses gt st)
+        let wrong = ((misses gCode sCode), (misses sCode gCode))
+        let whites = Set.intersect (Set.ofList (fst wrong)) (Set.ofList (snd wrong))
+        whites.Count
+
+    // return guess with blacks & whites
+    (gCode, ((blacks gCode sCode), (whites gCode sCode)))
+
+printfn "%A" (qvalidate gCode sCode)
