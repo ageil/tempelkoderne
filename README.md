@@ -1,8 +1,5 @@
-# Tempelkoderne
+# OBS OBS OBS!
 
-Dette er tempelkodernes stash. Her ligger kodestumper fra større projekter.
+Vi er flyttet til: https://github.com/tempelkoderne
 
-Medlemmer:
-- Anders Geil
-- Peter Lim
-- Tobias Satannius
+Please ikke push til det her directory!
