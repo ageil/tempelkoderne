@@ -77,7 +77,7 @@ let s1Code = [White; Red; Black; Black]
 // En guess code til test.
 let g1Code = [Black; White; Red; Black]
 
-printfn "\nvalidate %A %A\n     %A" s1Code g1Code (validate s1Code g1Code)
+// printfn "\nvalidate %A %A\n     %A" s1Code g1Code (validate s1Code g1Code)
 
 
 
@@ -104,6 +104,7 @@ let qvalidate (gCode : code) (sCode : code) =
     // count whites
     let whites (gCode : code) (sCode : code) =
         let rec misses l1 l2 =
+            printfn "l1: %A, l2: %A" l1 l2 
             match (l1, l2) with
             | ([],_) -> []
             | (_,[]) -> []
@@ -116,13 +117,13 @@ let qvalidate (gCode : code) (sCode : code) =
     // return guess with blacks & whites
     (gCode, ((blacks gCode sCode), (whites gCode sCode)))
 
-printfn "\nqvalidate %A %A\n    %A" g1Code s1Code (qvalidate g1Code s1Code)
+// printfn "\nqvalidate %A %A\n    %A" g1Code s1Code (qvalidate g1Code s1Code)
 
 // Endnu en secret code til test.
 let s2Code = [White; White; Black; Black]
 // Endnu en guess code til test.
 let g2Code = [Black; Black; White; White]
 
-printfn "\nvalidate %A %A\n     %A" g2Code s2Code (validate g2Code s2Code)
+// printfn "\nvalidate %A %A\n     %A" g2Code s2Code (validate g2Code s2Code)
 
 printfn "\nqvalidate %A %A\n    %A" g2Code s2Code (qvalidate g2Code s2Code)
