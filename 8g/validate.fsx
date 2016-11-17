@@ -7,6 +7,7 @@ type answer = int * int // sort * hvid
 type board = (code * answer) list
 type player = Human | Computer
 
+
 // toHistogram omdanner en code til et histogram, en tuple der indeholder antallet af forekomster af hver farve.
 let toHistogram (c : code) =
     let mutable r = 0
@@ -103,17 +104,27 @@ let qvalidate (gCode : code) (sCode : code) =
 
     // count whites
     let whites (gCode : code) (sCode : code) =
-        let rec misses l1 l2 =
+        let rec notBlacks l1 l2 =
             match (l1, l2) with
             | ([],_) -> []
             | (_,[]) -> []
-            | (gh::gt,sh::st) -> if gh = sh then misses gt st
-                                 else gh::(misses gt st)
-        let wrong = ((misses gCode sCode), (misses sCode gCode))
-        let whites = Set.intersect (Set.ofList (fst wrong)) (Set.ofList (snd wrong))
-        whites.Count
+            | (gh::gt,sh::st) -> if gh = sh then notBlacks gt st
+                                 else gh::(notBlacks gt st)
+        let sortedNotBlacks = (List.sortBy (fun elem -> elem) (notBlacks gCode sCode),
+                               List.sortBy (fun elem -> elem) (notBlacks sCode gCode))
+        printfn "sortedNotBlacks: %A" sortedNotBlacks
+        let rec intersect (lists : codeColor list * codeColor list) =
+            match lists with
+            | ([],_) -> 0
+            | (_,[]) -> 0
+            | (h1::t1, h2::t2) when h1=h2 -> 1 + (intersect (t1,t2))
+            | (h1::t1, h2::t2) when h1<h2 -> (intersect (t1,(h2::t2)))
+            | (h1::t1, h2::t2) when h1>h2 -> (intersect ((h1::t1), t2))
+            | _ -> 666
+        intersect sortedNotBlacks
 
     // return guess with blacks & whites
     (gCode, ((blacks gCode sCode), (whites gCode sCode)))
 
-printfn "%A" (qvalidate gCode sCode)
+printfn "%A" (qvalidate [Black;Black;White;White] [White;White;Black;Black])
+
