@@ -73,11 +73,11 @@ let validate (secretCode : code) (guessCode : code) =
     result
 
 // En secret code til test.
-let sCode = [White; Red; Black; Black]
+let s1Code = [White; Red; Black; Black]
 // En guess code til test.
-let gCode = [Black; White; Red; Black]
+let g1Code = [Black; White; Red; Black]
 
-printfn "%A" (validate sCode gCode)
+printfn "%A" (validate s1Code g1Code)
 
 
 
@@ -116,4 +116,11 @@ let qvalidate (gCode : code) (sCode : code) =
     // return guess with blacks & whites
     (gCode, ((blacks gCode sCode), (whites gCode sCode)))
 
-printfn "%A" (qvalidate gCode sCode)
+printfn "%A" (qvalidate g1Code s1Code)
+
+// Endnu en secret code til test.
+let s2Code = [White; White; Black; Black]
+// Endnu en guess code til test.
+let g2Code = [Black; Black; White; White]
+
+printfn "%A" (qvalidate g2Code s2Code)
