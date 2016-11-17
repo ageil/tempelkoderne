@@ -112,7 +112,6 @@ let qvalidate (gCode : code) (sCode : code) =
                                  else gh::(notBlacks gt st)
         let sortedNotBlacks = (List.sortBy (fun elem -> elem) (notBlacks gCode sCode),
                                List.sortBy (fun elem -> elem) (notBlacks sCode gCode))
-        printfn "sortedNotBlacks: %A" sortedNotBlacks
         let rec intersect (lists : codeColor list * codeColor list) =
             match lists with
             | ([],_) -> 0
