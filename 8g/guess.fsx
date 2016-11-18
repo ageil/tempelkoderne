@@ -11,33 +11,6 @@ type player = Human | Computer
 
 
 // Dependency for guess.
-let rec toColour (str : string) =
-    match (str.[0]) with
-    | 'r' -> Red
-    | 'g' -> Green
-    | 'y' -> Yellow
-    | 'p' -> Purple
-    | 'w' -> White
-    | 'b' -> Black
-    | _ -> printf "Invalid input. Try again: "; toColour((System.Console.ReadLine ()).ToLower())
-
-// Dependency for guess.
-let enterCode () =
-    printfn "Pick your colours!"
-    printfn "(red / green / yellow / purple / white / black)"
-    printf "1st colour: "
-    let col1 =  toColour((System.Console.ReadLine ()).ToLower())    // Til type (Til lower case (Kalder brugerinput))
-    printf "2nd colour: "
-    let col2 =  toColour((System.Console.ReadLine ()).ToLower())
-    printf "3rd colour: "
-    let col3 =  toColour((System.Console.ReadLine ()).ToLower())
-    printf "4th colour: "
-    let col4 =  toColour((System.Console.ReadLine ()).ToLower())
-    let colours = [col1] @ [col2] @ [col3] @ [col4]
-    printfn "Your pick: %A" colours
-    colours
-
-// Dependency for guess.
 let generateCode () =
     let colors = [Red; Green; Yellow; Purple; White; Black]
     let rand = System.Random()
@@ -55,7 +28,7 @@ let endGame () =
 
 
 // Håndterer og retter human input. Spørger ved tvivlstilfælde.
-let humanGuess() =
+let enterCode () =
     let rec inputCode() =
         printfn "Pick your colors!"
         printfn "([R]ed; [G]reen; [Y]ellow; [P]urple; [W]hite; [B]lack)"
@@ -81,17 +54,15 @@ let humanGuess() =
     inputCode()
 
 
-
+ 
 // guess : Tager en playertype og board for det nuværende spil og kalder en passende funktion, der genererer en kode.
 let guess (playerType : player) (currentBoard : board) =
     if currentBoard.Length < 20 && playerType = Human then
-        let guess = humanGuess ()
-        
+        enterCode ()
     elif currentBoard.Length < 20 && playerType = Computer then
         generateCode ()
     else
         endGame ()
-
 let testBoard = [([Red;Red;Red;Red],(0,0))]
 
 
