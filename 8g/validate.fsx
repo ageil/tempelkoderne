@@ -82,11 +82,6 @@ printfn "%A" (validate sCode gCode)
 
 
 
-
-
-
-
-
 // meget mere simpel validate, uden fucking ulæselig jon-sporring-histogramkode
 // bonus: rekursiv blacks-optælling (indeksering er langsomt i lister)
 
